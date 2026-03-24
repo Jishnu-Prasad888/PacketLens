@@ -1,0 +1,41 @@
+# PacketLens — port classification rules
+# Format: <port>  <label>  <category>
+# Categories: danger | secure | caution
+# Lines starting with # are ignored.
+# Edit this file freely; PacketLens loads it at startup from the working directory.
+
+# ── Danger (unencrypted / legacy) ──────────────────────────────────────────────
+21    FTP          danger
+23    Telnet       danger
+25    SMTP         danger
+80    HTTP         danger
+110   POP3         danger
+143   IMAP         danger
+8080  HTTP-Alt     danger
+8000  HTTP-Dev     danger
+
+# ── Secure ────────────────────────────────────────────────────────────────────
+22    SSH          secure
+443   HTTPS        secure
+465   SMTPS        secure
+587   Submission   secure
+993   IMAPS        secure
+995   POP3S        secure
+8443  HTTPS-Alt    secure
+
+# ── Caution (infrastructure / database) ──────────────────────────────────────
+53    DNS          caution
+67    DHCP-Srv     caution
+68    DHCP-Cli     caution
+123   NTP          caution
+137   NetBIOS-NS   caution
+138   NetBIOS-DG   caution
+139   NetBIOS-SS   caution
+161   SNMP         caution
+389   LDAP         caution
+445   SMB          caution
+1433  MSSQL        caution
+3306  MySQL        caution
+5432  PostgreSQL   caution
+6379  Redis        caution
+27017 MongoDB      caution

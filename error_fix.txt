@@ -1,0 +1,97 @@
+## building and running
+
+mkdir build && cd build
+
+cmake .. && cmake --build . -j$(nproc)
+
+sudo -E DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY ./packetlens
+
+sudo setcap cap_net_raw,cap_net_admin=eip ./packetlens
+
+
+```bash
+> sudo ./packetlens
+[sudo] password for jishnu: 
+Sorry, try again.
+[sudo] password for jishnu: 
+Authorization required, but no authorization protocol specified
+
+qt.qpa.xcb: could not connect to display :1
+qt.qpa.plugin: Could not load the Qt platform plugin "xcb" in "" even though it was found.
+This application failed to start because no Qt platform plugin could be initialized. Reinstalling the application may fix this problem.
+
+Available platform plugins are: xcb, wayland-egl, vnc, offscreen, wayland, vkkhrdisplay, linuxfb, minimalegl, eglfs, minimal.
+
+[1]    25051 IOT instruction  sudo ./packetlens
+```
+
+```bash
+sudo setcap cap_net_raw,cap_net_admin=eip ./packetlens
+./packetlens   # no sudo, display works normally
+```
+
+or 
+
+```bash
+sudo -E DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY ./packetlens
+```
+
+
+
+## the fun stuff
+
+
+```bash
+> curl http://127.0.0.1:8765/health
+{"status":"ok"}%                                                                                         
+> curl http://127.0.0.1:8765/stats
+{"total_packets":277,"total_bytes":71859,"active_flows":52,"timestamp":"2026-03-21T20:26:52Z"}%          
+> curl http://127.0.0.1:8765/flows | python3 -m json.tool | head -40
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  9369  100  9369    0     0  6148k      0 --:--:-- --:--:-- --:--:-- 9149k
+[
+    {
+        "src_ip": "10.50.58.21",
+        "src_port": 62972,
+        "dst_ip": "224.0.0.252",
+        "dst_port": 5355,
+        "protocol": "UDP",
+        "packets": 1,
+        "bytes": 69,
+        "process": "",
+        "state": "EST"
+    },
+    {
+        "src_ip": "10.50.58.175",
+        "src_port": 41504,
+        "dst_ip": "162.159.133.234",
+        "dst_port": 443,
+        "protocol": "TCP",
+        "packets": 4,
+        "bytes": 394,
+        "process": "firefox-bin",
+        "state": "NEW"
+    },
+    {
+        "src_ip": "10.50.58.226",
+        "src_port": 59420,
+        "dst_ip": "239.255.255.250",
+        "dst_port": 1900,
+        "protocol": "UDP",
+        "packets": 4,
+        "bytes": 848,
+        "process": "",
+        "state": "EST"
+    },
+    {
+        "src_ip": "10.50.59.26",
+        "src_port": 61819,
+        "dst_ip": "239.255.255.250",
+        "dst_port": 1900,
+        "protocol": "UDP",
+
+~/Desktop/PacketLens/build | master !5 ?14 -------------------------------------------------- 01:56:58 
+>
+``` 
+
